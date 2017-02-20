@@ -57,6 +57,8 @@ header h1 {
   -webkit-font-smoothing: antialiased;
 }
 
+
+
 header h1:before {
   content: "./ ";
   font-size: 24px;
@@ -255,6 +257,12 @@ a {
 {
   width: 460px;
   height: 345px;
+}
+
+.project-img-mario
+{
+  width: auto !important;
+  max-height: 50%;
 }
 
 .caption
