@@ -1,0 +1,21 @@
+#title {
+	text-align: center;
+}
+
+#packet, #code {
+	color: black;
+}
+
+#encoded, #original {
+	color: lime;
+}
+
+.container {
+	width: 100%;
+	max-width: none;
+}
+
+.row {
+	display: flex;
+	justify-content: space-evenly;
+}

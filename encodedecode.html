@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/encrypt.css" media="screen">
+	<title>About</title>
+</head>
+<body>
+	<header>
+      <div class="container">
+        <h1 id="title">Mysterious Encryption</h1>
+        <h2></h2>
+      </div>
+    
+    
+    <br>
+    </header>
+<br>
+	<div class="container">
+		<div class="row">
+      <div class="col">
+        <label for="packet">Packet (1 to 4 characters):</label>
+
+        <input type="text" id="packet" name="packet" required
+               minlength="1" maxlength="4" size="10">
+        <div>Code: <span id="encoded"></span></div>
+      </div>
+      <div class="col">
+        <label for="code">Code:</label>
+
+        <input type="number" id="code" name="code" required size="10">
+        <div>Original: <span id="original"></span></div>
+      </div>
+    </div>
+	</div>
+</body>
+<script src="javascripts/encrypt.js"></script>
+</html>
