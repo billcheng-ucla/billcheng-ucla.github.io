@@ -1,6 +1,6 @@
-function encode(packet) 
+function packetEncode(packet) 
 {
-	let packetBin = []
+	let packetBin = [];
 	for(const char of packet) 
 	{
 		let binChar = char.charCodeAt().toString(2).padStart(8, '0');
@@ -24,7 +24,26 @@ function encode(packet)
 	return parseInt(packetBinEncoded, 2);
 }
 
-function decode(encrytCode)
+function encode(data) 
+{
+	console.log("AEFDSF");
+	let encoded = [];
+	for(let i = 0; i < data.length; i++)
+	{
+		if(i % 4 === 0)
+		{
+			encoded.push([]);
+		}
+		encoded[encoded.length - 1].push(data[i]);
+	}
+	for(let i = 0; i < encoded.length; i++)
+	{
+		encoded[i] = packetEncode(encoded[i].join(""));
+	}
+	return encoded;
+}
+
+function packetDecode(encrytCode)
 {
 	let encrytCodeBin = encrytCode.toString(2).padStart(32, '0');
 	encrytCodeBin = encrytCodeBin.split("");
@@ -53,35 +72,56 @@ function decode(encrytCode)
 	return packet;
 }
 
+function decode(codeList)
+{
+	let original = '';
+	for(const code of codeList)
+	{
+		original += packetDecode(code);
+	}
+	return original;
+}
+
+function cleanCodeList(rawCodeList)
+{
+	
+	let cleanCodeList = rawCodeList.replace("[", "");
+	cleanCodeList = cleanCodeList.replace("]", "");
+	cleanCodeList = cleanCodeList.split(",");
+	for(let i = 0; i < cleanCodeList.length; i++)
+	{
+		cleanCodeList[i] = cleanCodeList[i].trim();
+	}
+	return cleanCodeList;
+}
+
 $("#packet").change(() => {
-	$("#encoded").text(encode($("#packet").val()));
+	$("#encoded").text(`[${encode($("#packet").val()).toString().split(",").join(", ")}]`);
 });
 
 $("#code").change(() => {
-	$("#original").text(decode(parseInt($("#code").val())));
+	let cleanCodes = cleanCodeList($("#code").val());
+	let NaNFound = false;
+	for(let i = 0; i < cleanCodes.length; i++)
+	{
+		if(isNaN(cleanCodes[i])) 
+		{
+			NaNFound = true;
+		}
+		else
+		{
+			cleanCodes[i] = parseInt(cleanCodes[i]);
+		}
+	}
+	if(NaNFound)
+	{
+		$("#original").text("Invalid Input");
+	}
+	else
+	{
+		$("#original").text(decode(cleanCodes));
+	}
+	
 });
 
 
-console.log(encode('A') === 16777217)
-console.log(encode('FRED') === 251792692)
-console.log(encode(' :^)') === 79094888)
-console.log(encode("foo") === 124807030)
-console.log(encode(" foo") === 250662636)
-console.log(encode("foot") === 267939702)
-console.log(encode("BIRD") === 251930706)
-console.log(encode("....") === 15794160)
-console.log(encode("^^^^") === 252706800)
-console.log(encode("Woot") === 266956663)
-console.log(encode("no") === 53490482)
-
-console.log(decode(16777217) === 'A')
-console.log(decode(251792692) === 'FRED')
-console.log(decode(79094888) === ' :^)')
-console.log(decode(124807030) === "foo")
-console.log(decode(250662636) === " foo")
-console.log(decode(267939702) === "foot")
-console.log(decode(251930706) === "BIRD")
-console.log(decode(15794160) === "....")
-console.log(decode(252706800) === "^^^^")
-console.log(decode(266956663) === "Woot")
-console.log(decode(53490482) === "no")
